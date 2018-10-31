@@ -11,8 +11,13 @@
 
 WaveHeader *make_wave_header_without_size();
 
-int main() {
-    Midi *midi = read_midi_file("../main.mid");
+int main(int argc, char *argv[]) {
+    if (argc != 3) {
+        printf("%s in.mid out.wav\n", argv[0]);
+        return 0;
+    }
+
+    Midi *midi = read_midi_file(argv[1]);
 
     if (!midi) {
         return -1;
@@ -85,7 +90,7 @@ int main() {
         offset += trackEvent->offset;
         trackEvent = trackEvent->next;
     }
-    write_wave("test.wav", wave);
+    write_wave(argv[2], wave);
 
     free_midi(midi);
     free_wave(wave);
